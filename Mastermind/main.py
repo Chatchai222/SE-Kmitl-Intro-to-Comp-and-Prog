@@ -44,25 +44,30 @@ enter_code_button.place(relx=0.125, rely=0.925, relheight=0.05, relwidth=0.1)
 restart_button = tk.Button(main_frame, text="Restart")
 restart_button.place(relx=0.275, rely=0.925, relheight=0.05, relwidth=0.1)
 
-text_frame = tk.Label(main_frame)
-text_frame.place(relx=0.45, rely=0.85, relheight=0.125, relwidth=0.2)
+input_frame = tk.Frame(main_frame)
+input_frame.place(relx=0.45, rely=0.85, relheight=0.125, relwidth=0.2)
 
-red_label = tk.Label(text_frame, text="R - Red", fg="Red")
-red_label.grid(row=0, column=0)
+red_button = tk.Button(input_frame, text="R - Red", fg="Red")
+red_button.place(relx=0, rely=0, relheight=0.25, relwidth=0.5)
 
-orange_label = tk.Label(text_frame, text="O - Orange", fg="Orange")
-orange_label.grid(row=1, column=0)
+orange_button = tk.Button(input_frame, text="O - Orange", fg="Orange")
+orange_button.place(relx=0, rely=0.25, relheight=0.25, relwidth=0.5)
 
-yellow_label = tk.Label(text_frame, text="Y - Yellow", fg="#EFEC00")
-yellow_label.grid(row=2, column=0)
+yellow_button = tk.Button(input_frame, text="Y - Yellow", fg="#EFEC00")
+yellow_button.place(relx=0, rely=0.5, relheight=0.25, relwidth=0.5)
 
-green_label = tk.Label(text_frame, text="G - Green", fg="Green")
-green_label.grid(row=0, column=1)
+green_button = tk.Button(input_frame, text="G - Green", fg="Green")
+green_button.place(relx=0.5, rely=0, relheight=0.25, relwidth=0.5)
 
-blue_label = tk.Label(text_frame, text="B - Blue", fg="Blue")
-blue_label.grid(row=1, column=1)
+blue_button = tk.Button(input_frame, text="B - Blue", fg="Blue")
+blue_button.place(relx=0.5, rely=0.25, relheight=0.25, relwidth=0.5)
 
-violet_label = tk.Label(text_frame, text="V - Violet", fg="Violet")
-violet_label.grid(row=2, column=1)
+violet_button = tk.Button(input_frame, text="V - Violet", fg="Violet")
+violet_button.place(relx=0.5, rely=0.5, relheight=0.25, relwidth=0.5)
+
+clear_code_button = tk.Button(input_frame, text="Clear code")
+clear_code_button.place(relx=0.25, rely=0.75, relheight=0.25, relwidth=0.5)
 
 root.mainloop()
+
+
