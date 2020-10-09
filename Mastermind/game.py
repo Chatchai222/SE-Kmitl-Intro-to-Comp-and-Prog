@@ -1,7 +1,6 @@
 # This is for the game part
 
 def place_key_pegs(user_secret, user_guess):
-
     output = []
     secret = list(user_secret)
     guess = list(user_guess)
