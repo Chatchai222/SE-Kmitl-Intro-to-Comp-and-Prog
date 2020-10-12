@@ -3,11 +3,14 @@ This program is the game mastermind!
 - In this game the user will be the code breaker
 """
 import tkinter as tk
+import random
 
 # The decodeboard class which contains all the required methods, game, GUI
 class DecodeBoard:
     def __init__(self):
-        self.secret_code = "RRYY"
+        self.lives = 6
+        self.possible_code = "ROYGBV"
+        self.secret_code = self.generate_secret_code()
         self.code_list = []
         self.current_code = []
         self.key_peg_list = []
@@ -20,13 +23,13 @@ class DecodeBoard:
         self.entry_frame = tk.Frame(self.main_frame, bg="Grey", bd=2)
         self.input_frame = tk.Frame(self.main_frame)
         self.enter_code_button = tk.Button(self.main_frame, text="Enter code", command=lambda: self.press_enter_code())
-        self.restart_button = tk.Button(self.main_frame, text="Restart", command=lambda: self.display_code_list())
-        self.red_button = tk.Button(self.input_frame, text="R - Red", fg="Red", command=lambda: self.press_color("Red", "R"))
-        self.orange_button = tk.Button(self.input_frame, text="O - Orange", fg="Orange", command=lambda: self.press_color("Orange", "O"))
-        self.yellow_button = tk.Button(self.input_frame, text="Y - Yellow", fg="Yellow", command=lambda: self.press_color("Yellow", "Y"))
-        self.green_button = tk.Button(self.input_frame, text="G - Green", fg="Green", command=lambda: self.press_color("Green", "G"))
-        self.blue_button = tk.Button(self.input_frame, text="B - Blue", fg="Blue", command=lambda: self.press_color("Blue", "B"))
-        self.violet_button = tk.Button(self.input_frame, text="V - Violet", fg="Violet", command=lambda: self.press_color("Violet", "V"))
+        self.restart_button = tk.Button(self.main_frame, text="Restart", command=lambda: self.press_restart())
+        self.red_button = tk.Button(self.input_frame, text="R - Red", fg="Red", bg='Red', command=lambda: self.press_color("Red", "R"))
+        self.orange_button = tk.Button(self.input_frame, text="O - Orange", fg="Orange", bg='Orange', command=lambda: self.press_color("Orange", "O"))
+        self.yellow_button = tk.Button(self.input_frame, text="Y - Yellow", fg="Yellow", bg="Yellow", command=lambda: self.press_color("Yellow", "Y"))
+        self.green_button = tk.Button(self.input_frame, text="G - Green", fg="Green", bg="Green", command=lambda: self.press_color("Green", "G"))
+        self.blue_button = tk.Button(self.input_frame, text="B - Blue", fg="Blue", bg="Blue", command=lambda: self.press_color("Blue", "B"))
+        self.violet_button = tk.Button(self.input_frame, text="V - Violet", fg="Violet", bg="Violet", command=lambda: self.press_color("Violet", "V"))
         self.clear_code_button = tk.Button(self.input_frame, text="Clear code", command=lambda: self.press_clear_code())
 
     def display_key_peg_list(self):
@@ -37,20 +40,59 @@ class DecodeBoard:
                 peg.place(relx=x, rely=y, relheight=0.12, relwidth=0.2)
 
     def display_code_list(self):
-        print(self.code_list)
-        print("Used display_code_list")
         x_coord = [0.04, 0.28, 0.52, 0.76]
         y_coord = [0.04, 0.2, 0.36, 0.52, 0.68, 0.84]
         for y, code_guess in zip(y_coord, self.code_list):
             for x, code_peg in zip(x_coord, code_guess):
                 code_peg.place(relx=x, rely=y, relheight=0.12, relwidth=0.2)
-                print("Placed a peg" + str(x))
 
     def display_current_code(self):
         coord = [0, 0.25, 0.5, 0.75]
         code_with_coord = zip(self.current_code, coord)
         for each_peg, each_coord in code_with_coord:
             each_peg.place(relx=each_coord, rely=0, relwidth=0.24, relheight=1)
+
+    def remove_code_list(self):
+        for code in self.code_list:
+            for peg in code:
+                peg.place_forget()
+        self.code_list = []
+
+    def remove_key_peg_list(self):
+        for key_pegs_line in self.key_peg_list:
+            for key_peg in key_pegs_line:
+                key_peg.place_forget()
+        self.key_peg_list = []
+
+    def dis_or_act_button_game_over(self, state):
+        game_over_button = [
+            self.enter_code_button,
+            self.red_button,
+            self.orange_button,
+            self.yellow_button,
+            self.green_button,
+            self.blue_button,
+            self.violet_button,
+            self.clear_code_button
+        ]
+        for each_button in game_over_button:
+            each_button['state'] = state
+
+    def is_player_won(self):
+        latest_key_pegs = self.key_peg_list[-1]
+        black_peg = [peg['text'] == 'B' for peg in latest_key_pegs]
+
+        if all(black_peg) and len(black_peg) == 4:
+            return True
+        else:
+            return False
+
+    def generate_secret_code(self):
+        new_secret = ""
+        for _ in range(4):
+            new_secret += random.choice(self.possible_code)
+        self.secret_code = new_secret
+        return new_secret
 
     def generate_key_peg(self):
         output = []
@@ -69,7 +111,6 @@ class DecodeBoard:
                 secret.remove(peg)
                 output.append(tk.Label(self.key_frame, text="W", bg="White"))
 
-
         self.key_peg_list.append(output)
 
     def press_color(self, in_color, in_text):
@@ -78,11 +119,9 @@ class DecodeBoard:
         print(self.current_code)
 
     def press_clear_code(self):
+        for each_code_peg in self.current_code:
+            each_code_peg.place_forget()
         self.current_code = []
-        clear_frame = tk.Frame(self.entry_frame, bg="Grey")
-        clear_frame.place(relx=0, rely=0, relheight=1, relwidth=1)
-        print(self.current_code)
-        print("Hello")
 
     def press_enter_code(self):
         if len(self.current_code) < 4:
@@ -98,6 +137,22 @@ class DecodeBoard:
         self.press_clear_code()
         self.display_code_list()
         self.display_key_peg_list()
+        if self.is_player_won():
+            self.dis_or_act_button_game_over('d')
+            self.status_box['text'] = "YOU WIN!"
+            return 0
+        if len(self.code_list) >= self.lives:
+            self.dis_or_act_button_game_over('d')
+            self.status_box['text'] = "Out of guess/lives\nYou LOSE!"
+
+    def press_restart(self):
+        self.remove_code_list()
+        self.remove_key_peg_list()
+        self.press_clear_code()
+        self.generate_secret_code()
+        self.dis_or_act_button_game_over('a')
+        self.status_box['text'] = ""
+
 
 
 

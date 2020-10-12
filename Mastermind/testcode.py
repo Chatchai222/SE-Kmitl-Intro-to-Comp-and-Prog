@@ -1,12 +1,9 @@
 import tkinter as tk
 
 def change_mes(mesbox, newtext):
-    mesbox['text'] += newtext
-    fire_frame['bg'] = "Blue"
-    new_fire_frame = tk.Frame(second_frame, bg=fire_frame['bg'])
-    new_fire_frame.place(relx=0.1, rely=0.1, relwidth=0.2, relheight=0.2)
-
-
+    print("Hello")
+    first_frame.place_forget()
+    mesbox.pack(for)
 
 root = tk.Tk()
 
