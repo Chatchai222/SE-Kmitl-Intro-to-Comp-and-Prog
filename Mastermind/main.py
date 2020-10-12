@@ -15,21 +15,22 @@ class DecodeBoard:
         self.current_code = []
         self.key_peg_list = []
         self.root = tk.Tk()
+        self.root.title("Mastermind")
         self.canvas = tk.Canvas(self.root, height=700, width=1000)
         self.main_frame = tk.Frame(self.root, bg="White")
-        self.code_frame = tk.Frame(self.main_frame, bg="#D0F2F4")
+        self.code_frame = tk.Frame(self.main_frame, bg="#CDCDCD")
         self.key_frame = tk.Frame(self.main_frame, bg="Grey")
         self.status_box = tk.Message(self.main_frame)
         self.entry_frame = tk.Frame(self.main_frame, bg="Grey", bd=2)
         self.input_frame = tk.Frame(self.main_frame)
         self.enter_code_button = tk.Button(self.main_frame, text="Enter code", command=lambda: self.press_enter_code())
         self.restart_button = tk.Button(self.main_frame, text="Restart", command=lambda: self.press_restart())
-        self.red_button = tk.Button(self.input_frame, text="R - Red", fg="Red", bg='Red', command=lambda: self.press_color("Red", "R"))
-        self.orange_button = tk.Button(self.input_frame, text="O - Orange", fg="Orange", bg='Orange', command=lambda: self.press_color("Orange", "O"))
-        self.yellow_button = tk.Button(self.input_frame, text="Y - Yellow", fg="Yellow", bg="Yellow", command=lambda: self.press_color("Yellow", "Y"))
-        self.green_button = tk.Button(self.input_frame, text="G - Green", fg="Green", bg="Green", command=lambda: self.press_color("Green", "G"))
-        self.blue_button = tk.Button(self.input_frame, text="B - Blue", fg="Blue", bg="Blue", command=lambda: self.press_color("Blue", "B"))
-        self.violet_button = tk.Button(self.input_frame, text="V - Violet", fg="Violet", bg="Violet", command=lambda: self.press_color("Violet", "V"))
+        self.red_button = tk.Button(self.input_frame, text="R - Red", fg="Black", bg='Red', command=lambda: self.press_color("Red", "R"))
+        self.orange_button = tk.Button(self.input_frame, text="O - Orange", fg="Black", bg='Orange', command=lambda: self.press_color("Orange", "O"))
+        self.yellow_button = tk.Button(self.input_frame, text="Y - Yellow", fg="Black", bg="Yellow", command=lambda: self.press_color("Yellow", "Y"))
+        self.green_button = tk.Button(self.input_frame, text="G - Green", fg="Black", bg="Green", command=lambda: self.press_color("Green", "G"))
+        self.blue_button = tk.Button(self.input_frame, text="B - Blue", fg="Black", bg="Blue", command=lambda: self.press_color("Blue", "B"))
+        self.violet_button = tk.Button(self.input_frame, text="V - Violet", fg="Black", bg="Violet", command=lambda: self.press_color("Violet", "V"))
         self.clear_code_button = tk.Button(self.input_frame, text="Clear code", command=lambda: self.press_clear_code())
 
     def display_key_peg_list(self):
@@ -109,14 +110,13 @@ class DecodeBoard:
         for peg in guess:
             if peg in secret:
                 secret.remove(peg)
-                output.append(tk.Label(self.key_frame, text="W", bg="White"))
+                output.append(tk.Label(self.key_frame, text="W", fg="White", bg="White"))
 
         self.key_peg_list.append(output)
 
     def press_color(self, in_color, in_text):
         self.current_code.append(tk.Label(self.entry_frame, text=in_text, bg=in_color, fg=in_color))
         self.display_current_code()
-        print(self.current_code)
 
     def press_clear_code(self):
         for each_code_peg in self.current_code:
@@ -132,7 +132,7 @@ class DecodeBoard:
         self.current_code = self.current_code[:4:]
 
         # IDK why tkinter don't allow to change parent/master of the widget so I have to just append a new widget
-        self.code_list.append([tk.Label(self.code_frame, bg=code_peg['bg'], text=code_peg['text']) for code_peg in self.current_code])
+        self.code_list.append([tk.Label(self.code_frame, bg=code_peg['bg'], fg=code_peg['bg'], text=code_peg['text']) for code_peg in self.current_code])
         self.generate_key_peg()
         self.press_clear_code()
         self.display_code_list()
