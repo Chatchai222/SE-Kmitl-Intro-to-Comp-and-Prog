@@ -1,0 +1,68 @@
+# This is the planning for the game called mastermind
+"""
+The code maker will choose a combination using the code pegs and hide it
+The player will then place 4 code pegs onto the row of the decoding board
+The code maker will then compare the player guess and the secret combination
+If the player guess is the same as secret combination
+    Player wins
+    Gameover
+Else the code maker will place down the key pegs
+    Code maker will then count how many codepeg is the correct color and correct position
+        The code maker will then place that amount of black pegs
+    Code maker will then count how many codepeg is the correct color and wrong position
+        The code maker will then place that amount of white pegs
+This will keep going until:
+- The player runs of out of guess
+- The player guess correctly
+
+"""
+### The game part ###
+There is 6 color code pegs namely Red Orange Yellow Green Blue Purple
+There is 2 color key pegs namely the black pegs and white pegs
+There is 8 guesses the player can make
+
+### Functions for the game ###
+def place_keys(secret, guess)
+    for each
+
+
+# Beginning of round
+The player steps up to the table
+Computer make a secret combination length of 4 using the 6 color code pegs (Say RGBB)
+While the player is not out of lives
+    The player will enter a code using the code pegs
+    The computer will then check first if the user code is valid
+    If the code is invalid
+        The computer will ask the player to re-input the code
+
+    Assuming the code is valid
+    The computer will then compare the player code and secret code
+    The com will count how many code pegs is in the correct position AND correct color
+        The com will then place that amount of black pegs onto the peg row
+    The com will count how many code pegs is in the wrong position AND correct color
+        The com will then place that amount of black pegs onto the peg row
+
+    If there is 4 black pegs on the latest guess row
+        Player wins
+        GAMEOVER
+    Else:
+        The player loses 1 lives
+        The computer moves onto the next guess
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
